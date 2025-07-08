@@ -2,7 +2,11 @@
 
 namespace ContainerizedAPI.DTOs;
 
-public record ProductDTO(string Name, int Sku);
+// Add Id to DTO for API responses
+public record ProductDTO(Guid Id, string Name, int Sku)
+{
+    public ProductDTO(string Name, int Sku) : this(Guid.Empty, Name, Sku) { }
+}
 
 public static class ProductExtensions
 {

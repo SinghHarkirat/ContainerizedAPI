@@ -14,6 +14,7 @@ ContainerizedAPI is a .NET 8 Web API project designed for modern, scalable, and 
 ### Prerequisites
 - [.NET 8 SDK](https://dotnet.microsoft.com/download)
 - [Docker](https://www.docker.com/get-started)
+- [SQL Server Management Studio (SSMS)](https://aka.ms/ssms) (optional, for viewing the database)
 
 ### Running the API Locally
 1. Clone the repository.
@@ -23,6 +24,21 @@ ContainerizedAPI is a .NET 8 Web API project designed for modern, scalable, and 
    docker-compose up --build
    ```
 4. The API will be available at `http://localhost:5000` (or as configured).
+
+### Viewing the Database in SSMS
+1. Open SQL Server Management Studio (SSMS).
+2. Connect to the server using:
+   - **Server name:** `localhost,1433`
+   - **Login:** `sa`
+   - **Password:** `Gokussj5`
+3. You can now browse the `Dummy` database and its tables.
+
+### Accessing Swagger API Documentation
+Once the API is running, open your browser and navigate to:
+```
+http://localhost:5000/swagger
+```
+This provides an interactive UI to explore and test the API endpoints.
 
 ### Project Structure
 - `src/` - Source code for the API

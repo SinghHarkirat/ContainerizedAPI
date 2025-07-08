@@ -30,47 +30,51 @@ productsGroup.MapPost("/", async (ProductDTO productDTO, MyDbContext myDbContext
 .WithSummary("Create new product")
 .WithDescription("Creates a new product with provided data");
 
-productsGroup.MapGet("/", async (MyDbContext dbContext) => Results.Ok(await dbContext.Products.ToListAsync()))
-            .WithSummary("Get all products")
-            .WithDescription("Retrieves a list of all available products.");
+productsGroup.MapGet("/", async (MyDbContext dbContext) =>
+    Results.Ok(await dbContext.Products
+        .Select(p => new ProductDTO(p.Id, p.Name, p.Sku))
+        .ToListAsync()))
+    .WithSummary("Get all products")
+    .WithDescription("Retrieves a list of all available products.");
 
-productsGroup.MapGet("/{id:guid}", async (Guid id, MyDbContext myDbContext) =>
-{
-    var product = await myDbContext.Products.FindAsync(id);
-    if (product is null)
-    {
-        return Results.NotFound();
-    }
-    return Results.Ok(new ProductDTO(product.Name, product.Sku));
-})
-.WithSummary("Get a product by id")
-.WithDescription("Retrieves a product by id if available.");
-
-productsGroup.MapPatch("/UpdateSku", async (Guid id, int newSku, MyDbContext dbContext) =>
+productsGroup.MapGet("/{id:guid}", async (Guid id, MyDbContext dbContext) =>
 {
     var product = await dbContext.Products.FindAsync(id);
     if (product is null)
     {
         return Results.NotFound();
     }
-    product.Sku = newSku;
+    return Results.Ok(new ProductDTO(product.Id, product.Name, product.Sku));
+})
+.WithSummary("Get a product by id")
+.WithDescription("Retrieves a product by id if available.");
+
+// PATCH: expects JSON body { "id": "...", "newSku": ... }
+productsGroup.MapPatch("/UpdateSku", async (UpdateSkuRequest req, MyDbContext dbContext) =>
+{
+    var product = await dbContext.Products.FindAsync(req.Id);
+    if (product is null)
+    {
+        return Results.NotFound();
+    }
+    product.Sku = req.NewSku;
     product.UpdatedDate = DateTime.Now;
     await dbContext.SaveChangesAsync();
-    return Results.Ok(product);
+    return Results.Ok(new ProductDTO(product.Id, product.Name, product.Sku));
 })
 .WithSummary("Updates a product SKU")
 .WithDescription("Updates product with provided SKU");
 
 
-productsGroup.MapDelete("/{id:Guid}", async (MyDbContext myDbContext, Guid id) =>
+productsGroup.MapDelete("/{id:guid}", async (Guid id, MyDbContext dbContext) =>
 {
-    var product = await myDbContext.Products.FindAsync(id);
+    var product = await dbContext.Products.FindAsync(id);
     if (product is null)
     {
         return Results.NotFound();
     }
-    myDbContext.Products.Remove(product);
-    await myDbContext.SaveChangesAsync();
+    dbContext.Products.Remove(product);
+    await dbContext.SaveChangesAsync();
     return Results.Ok();
 })
 .WithSummary("Deletes a product by id")
@@ -91,3 +95,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.Run();
+
+public record UpdateSkuRequest(Guid Id, int NewSku);
