@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  sqlserver-db:
+    container_name: sqlserver-container
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      MSSQL_SA_PASSWORD: "Gokussj5"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+  webapi:
+    container_name: webApi-container
+    image: dotnet8-api:v2
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Default=Server=sqlserver-db;Database=Dummy;User=sa;Password=Gokussj5;TrustServerCertificate=True;Encrypt=False;
+    depends_on:
+      - sqlserver-db
