@@ -22,3 +22,8 @@ services:
       - ConnectionStrings__Default=Server=sqlserver-db;Database=Dummy;User=sa;Password=Gokussj5;TrustServerCertificate=True;Encrypt=False;
     depends_on:
       - sqlserver-db
+  redis:
+    container_name: redis-container
+    image: redis:latest
+    ports:
+      - "6379:6379"
