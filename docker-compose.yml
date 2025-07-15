@@ -20,8 +20,10 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__Default=Server=sqlserver-db;Database=Dummy;User=sa;Password=Gokussj5;TrustServerCertificate=True;Encrypt=False;
+      - ConnectionStrings__Redis=redis:6379
     depends_on:
       - sqlserver-db
+      - redis
   redis:
     container_name: redis-container
     image: redis:latest

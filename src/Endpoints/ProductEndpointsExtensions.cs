@@ -37,7 +37,12 @@ public static class ProductEndpointsExtensions
             {
                 return Results.NotFound();
             }
-            return Results.Ok(product);
+            return Results.Ok(new ProductRequest
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Sku = product.Sku
+            });
         })
         .WithSummary("Get a product by id")
         .WithDescription("Retrieves a product by id if available.");
@@ -61,8 +66,8 @@ public static class ProductEndpointsExtensions
                 ? Results.Ok(product)
                 : Results.NotFound();
         })
-       .WithSummary("Updates a product SKU")
-       .WithDescription("Updates product with provided SKU");
+       .WithSummary("Updates a product")
+       .WithDescription("Updates product with provided information");
 
         productsGroup.MapDelete("/{id:guid}", async (Guid id) =>
         {
