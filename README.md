@@ -22,7 +22,7 @@ ContainerizedAPI is a .NET 8 Web API project designed for modern, scalable, and 
 2. Navigate to the project directory.
 3. Build and run the API using Docker Compose:
    ```powershell
-   docker-compose up --build
+   docker-compose up -d start http://localhost:8080/swagger
    ```
 4. The API will be available at `http://localhost:5000` (or as configured).
 
