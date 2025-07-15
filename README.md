@@ -14,6 +14,7 @@ ContainerizedAPI is a .NET 8 Web API project designed for modern, scalable, and 
 ### Prerequisites
 - [.NET 8 SDK](https://dotnet.microsoft.com/download)
 - [Docker](https://www.docker.com/get-started)
+  (Docker engine if using Linux, otherwise Docker desktop)
 - [SQL Server Management Studio (SSMS)](https://aka.ms/ssms) (optional, for viewing the database)
 
 ### Running the API Locally
