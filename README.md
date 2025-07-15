@@ -6,6 +6,7 @@ ContainerizedAPI is a .NET 8 Web API project designed for modern, scalable, and 
 - ASP.NET Core Web API built on .NET 8
 - Entity Framework Core with SQL Server support
 - Docker and Docker Compose support for containerized development and deployment
+- Redis caching integration for fast data access
 - Organized project structure with separation of concerns (DTOs, Entities, Migrations)
 - Ready for cloud or on-premises deployment
 
@@ -16,6 +17,7 @@ ContainerizedAPI is a .NET 8 Web API project designed for modern, scalable, and 
 - [Docker](https://www.docker.com/get-started)
   (Docker engine if using Linux, otherwise Docker desktop)
 - [SQL Server Management Studio (SSMS)](https://aka.ms/ssms) (optional, for viewing the database)
+- [RedisInsight](https://redis.com/redis-enterprise/redis-insight/) (optional, for viewing Redis data)
 
 ### Running the API Locally
 1. Clone the repository.
@@ -33,6 +35,13 @@ ContainerizedAPI is a .NET 8 Web API project designed for modern, scalable, and 
    - **Login:** `sa`
    - **Password:** `Gokussj5`
 3. You can now browse the `Dummy` database and its tables.
+
+### Viewing Redis Data
+1. Open RedisInsight or any Redis client.
+2. Connect to the Redis server using:
+   - **Host:** `localhost`
+   - **Port:** `6379`
+3. You can now browse and manage cached data.
 
 ### Accessing Swagger API Documentation
 Once the API is running, open your browser and navigate to:
